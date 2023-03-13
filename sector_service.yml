@@ -1,0 +1,39 @@
+openapi: 3.0.3
+info:
+  title: Challenge Mock
+  version: 1.0.0
+paths:
+  /sector/{phoneNumber}:
+    get:
+      summary: Return given's phone number sector
+      parameters:
+        - name: phoneNumber
+          in: path
+          description: Phone Number
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sector'
+components:
+  schemas:
+    Sector:
+      required:
+        - number
+        - sector
+      type: object
+      properties:
+        number:
+          type: string
+          example: "+1478192"
+        sector:
+          type: string
+          enum: [Auto, Banking, Energy, Health Care, Insurance, Materials, Entertainment,
+            Pharmaceuticals, Real Estate, Retailing, Technology, Telecommunication,
+            Transportation, Utilities]
+          examples: Banking
