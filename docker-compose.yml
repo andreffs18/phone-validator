@@ -1,0 +1,76 @@
+version: "3.2"
+services:
+  mongo:
+    image: mongo
+    volumes:
+      - ./tmp/mongo:/data/db
+    ports:
+      - 27017:27017
+
+  redis:
+    image: redis:alpine
+    volumes:
+      - ./tmp/redis:/var/lib/redis
+    ports:
+      - 6379:6379
+    environment:
+      - REDIS_REPLICATION_MODE=master
+      - ALLOW_EMPTY_PASSWORD=yes
+
+  postgres:
+    image: postgres:11-alpine
+    volumes:
+      - ./tmp/postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+
+  prometheus:
+    image: prom/prometheus:v2.30.3
+    ports:
+      - 9000:9090
+    volumes:
+      - ./tmp/prometheus:/etc/prometheus
+      - ./tmp/prometheus/prometheus-data:/prometheus
+    command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    volumes:
+      - ./tmp/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./tmp/grafana/grafana-data:/var/lib/grafana
+    environment:
+      - GF_DEFAULT_APP_MODE=development
+    depends_on:
+      - prometheus
+
+  api:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - mock
+      - grafana
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/app/
+    environment:
+      - BACKEND=backend.in_memory
+      #- BACKEND=backend.trie
+      #- BACKEND=backend.mongo
+      #- BACKEND=backend.redis
+      #- BACKEND=backend.postgres
+  mock:
+    image: stoplight/prism
+    ports:
+      - 4010:4010
+    volumes:
+      - ./sector_service.yml:/usr/src/prism/packages/cli/sector_service.yml
+    command: mock sector_service.yml --dynamic --host 0.0.0.0

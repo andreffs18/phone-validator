@@ -1,0 +1,48 @@
+[tool.poetry]
+name = "lolitos"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+license = ""
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+uvicorn = "^0.20.0"
+pydantic = "^1.10.4"
+starlette = "^0.24.0"
+starlette-prometheus = "^0.9.0"
+redis = "^4.5.1"
+psycopg2 = "^2.9.5"
+motor = "^3.1.1"
+pytrie = "^0.4.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
+ruff = "^0.0.244"
+pytest = "^7.2.1"
+pre-commit = "^3.1.0"
+
+[tool.ruff]
+line-length = 120
+# Isort config https://github.com/charliermarsh/ruff#how-does-ruffs-import-sorting-compare-to-isort
+select = [
+    # Pyflakes
+    "F",
+    # Pycodestyle
+    "E",
+    "W",
+    # isort
+    "I001"
+]
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
+[tool.black]
+line-length = 120
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
