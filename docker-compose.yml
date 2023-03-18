@@ -61,12 +61,9 @@ services:
       - 8080:8080
     volumes:
       - .:/app/
-    environment:
-      - BACKEND=backend.in_memory
-      #- BACKEND=backend.trie
-      #- BACKEND=backend.mongo
-      #- BACKEND=backend.redis
-      #- BACKEND=backend.postgres
+    env_file:
+      - .env
+
   mock:
     image: stoplight/prism
     ports:

@@ -1,9 +1,8 @@
 import logging
-import random
-import requests
 import os
 from typing import List, Union
 
+import requests
 from pydantic import BaseModel
 
 logger = logging.getLogger("uvicorn")

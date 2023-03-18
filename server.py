@@ -1,24 +1,28 @@
+import importlib
 import logging
 import os
 import time
-import importlib
+from enum import Enum
+
 import uvicorn
 from starlette.applications import Starlette
 from starlette.middleware import Middleware
 from starlette.routing import Route
 from starlette_prometheus import PrometheusMiddleware, metrics
-from enum import Enum
+
 from routes import aggregate, health
 
 logger = logging.getLogger("uvicorn")
 logger.setLevel(logging.DEBUG)
 
+
 class Backend(str, Enum):
-    IN_MEMORY = 'backend.in_memory'
-    TRIE = 'backend.trie'
-    MONGO = 'backend.mongo'
-    REDIS = 'backend.redis'
-    POSTGRES = 'backend.postgres'
+    IN_MEMORY = "backend.in_memory"
+    TRIE = "backend.trie"
+    MONGO = "backend.mongo"
+    REDIS = "backend.redis"
+    POSTGRES = "backend.postgres"
+
 
 BACKEND = importlib.import_module(os.environ.get("BACKEND", Backend.TRIE))
 
@@ -28,7 +32,7 @@ async def startup():
     logger.info(f'Starting up with "{BACKEND.__name__}"...')
     await BACKEND.startup_backend(app, logger)
     app.state.get_prefix = BACKEND.get_prefix
-    logger.info(f'Ready to receive traffic [TTS: {round(time.time() - start_time, 2)} secs]')
+    logger.info(f"Ready to receive traffic [TTS: {round(time.time() - start_time, 2)} secs]")
 
 
 async def shutdown():

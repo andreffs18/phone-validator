@@ -1,6 +1,6 @@
 import pytest
 
-from services import is_valid_phone_number
+from services import is_valid_phone_number, read_prefix_file
 
 
 @pytest.mark.parametrize(
@@ -24,3 +24,7 @@ from services import is_valid_phone_number
 )
 def test_is_valid_phone_number(phone_number, expected):
     assert is_valid_phone_number(phone_number) == expected
+
+
+def test_read_prefix_file():
+    assert len(read_prefix_file()) == 900005
