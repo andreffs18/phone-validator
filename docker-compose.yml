@@ -60,6 +60,9 @@ services:
     depends_on:
       - mock
       - grafana
+      - mongo
+      - postgres
+      - redis
     ports:
       - 8080:8080
     volumes:
