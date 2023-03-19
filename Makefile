@@ -8,7 +8,6 @@ clean:
 	docker-compose stop; \
 	docker-compose down --remove-orphans; \
 	docker image prune -f; \
-	rm -rf tmp/; \
 	find . -type d -name '*cache*' -prune -exec rm -rf {} +
 
 lint:
