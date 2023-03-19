@@ -26,10 +26,6 @@ async def startup_backend(app: Starlette, logger: Logger) -> None:
     )
     cur = postgres_client.cursor()
     cur.execute("CREATE TABLE IF NOT EXISTS prefix (prefix INT PRIMARY KEY NOT NULL);")
-    cur.execute(
-        "CREATE INDEX IF NOT EXISTS idx_prefix ON public.prefix USING btree "
-        "(prefix ASC NULLS LAST) INCLUDE(prefix) TABLESPACE pg_default;"
-    )
     prefixes = read_prefix_file()
 
     # setup column "key" with all lines as rows
