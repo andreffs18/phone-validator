@@ -33,9 +33,10 @@ services:
     ports:
       - 9000:9090
     volumes:
+      - ./prometheus.yml:/etc/prometheus/my-prometheus.yml
       - ./tmp/prometheus:/etc/prometheus
       - ./tmp/prometheus/prometheus-data:/prometheus
-    command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml
+    command: --web.enable-lifecycle  --config.file=/etc/prometheus/my-prometheus.yml
 
   grafana:
     image: grafana/grafana:latest
@@ -46,6 +47,8 @@ services:
       - ./tmp/grafana/grafana-data:/var/lib/grafana
     environment:
       - GF_DEFAULT_APP_MODE=development
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=password
     depends_on:
       - prometheus
 

@@ -16,7 +16,6 @@ do
     docker-compose --env-file .env up -d
     echo "Sleeping for 60 to let server bootstrap"
     sleep 60
-    docker-compose logs api
 
     for number in "+1983248" "+344999813123" "+6983248"
     do
@@ -35,4 +34,5 @@ do
         cat $file | sed -n -e 7p -e 32p -e 43p
         echo ""
     done
+
 done

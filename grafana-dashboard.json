@@ -4,8 +4,8 @@
       {
         "builtIn": 1,
         "datasource": {
-          "type": "grafana",
-          "uid": "-- Grafana --"
+          "type": "prometheus",
+          "uid": "pkNRHeaVz"
         },
         "enable": true,
         "hide": true,
@@ -23,15 +23,15 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "graphTooltip": 0,
-  "id": 6,
+  "graphTooltip": 1,
+  "id": 2,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "s1ErJZv4z"
+        "uid": "pkNRHeaVz"
       },
       "fieldConfig": {
         "defaults": {
@@ -81,7 +81,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "reqps"
         },
         "overrides": []
       },
@@ -108,25 +109,25 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "s1ErJZv4z"
+            "uid": "pkNRHeaVz"
           },
           "editorMode": "builder",
           "exemplar": false,
           "expr": "rate(starlette_requests_total[$__rate_interval])",
           "format": "time_series",
           "instant": false,
-          "legendFormat": "[{{job}}] {{method}} {{path_template}}",
+          "legendFormat": "{{method}} {{path_template}}",
           "range": true,
-          "refId": "A"
+          "refId": "Total Requests"
         }
       ],
-      "title": "Requests",
+      "title": "Requests over time",
       "type": "timeseries"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "s1ErJZv4z"
+        "uid": "pkNRHeaVz"
       },
       "fieldConfig": {
         "defaults": {
@@ -163,6 +164,7 @@
               "mode": "off"
             }
           },
+          "decimals": 1,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -204,22 +206,46 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "s1ErJZv4z"
+            "uid": "pkNRHeaVz"
+          },
+          "editorMode": "builder",
+          "expr": "histogram_quantile(0.99, sum by(le, path_template) (rate(starlette_requests_processing_time_seconds_bucket[$__rate_interval])))",
+          "legendFormat": "P99 {{path_template}}",
+          "range": true,
+          "refId": "P99"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "pkNRHeaVz"
           },
           "editorMode": "builder",
           "expr": "histogram_quantile(0.95, sum by(le, path_template) (rate(starlette_requests_processing_time_seconds_bucket[$__rate_interval])))",
-          "legendFormat": "__auto",
+          "hide": false,
+          "legendFormat": "P95 {{path_template}}",
           "range": true,
-          "refId": "A"
+          "refId": "P95"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "pkNRHeaVz"
+          },
+          "editorMode": "builder",
+          "expr": "histogram_quantile(0.9, sum by(le, path_template) (rate(starlette_requests_processing_time_seconds_bucket[$__rate_interval])))",
+          "hide": false,
+          "legendFormat": "P90 {{path_template}}",
+          "range": true,
+          "refId": "P90"
         }
       ],
-      "title": "P95",
+      "title": "Requests Time Taken",
       "type": "timeseries"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "s1ErJZv4z"
+        "uid": "pkNRHeaVz"
       },
       "fieldConfig": {
         "defaults": {
@@ -256,6 +282,7 @@
               "mode": "off"
             }
           },
+          "decimals": 1,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -270,9 +297,34 @@
               }
             ]
           },
-          "unit": "s"
+          "unit": "percentunit"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "{instance=\"api:8080\", job=\"services\"}"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -297,7 +349,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "s1ErJZv4z"
+            "uid": "pkNRHeaVz"
           },
           "editorMode": "builder",
           "expr": "rate(process_cpu_seconds_total[$__rate_interval])",
@@ -312,7 +364,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "s1ErJZv4z"
+        "uid": "pkNRHeaVz"
       },
       "fieldConfig": {
         "defaults": {
@@ -365,7 +417,33 @@
           },
           "unit": "decbytes"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "{__name__=\"process_virtual_memory_bytes\", instance=\"api:8080\", job=\"services\"}",
+                  "{__name__=\"process_resident_memory_bytes\", instance=\"api:8080\", job=\"services\"}"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -390,7 +468,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "s1ErJZv4z"
+            "uid": "pkNRHeaVz"
           },
           "editorMode": "builder",
           "expr": "process_virtual_memory_bytes",
@@ -401,7 +479,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "s1ErJZv4z"
+            "uid": "pkNRHeaVz"
           },
           "editorMode": "builder",
           "expr": "process_resident_memory_bytes",
@@ -423,13 +501,13 @@
     "list": []
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Starlette Dashboard",
-  "uid": "uFoisl0Vk",
-  "version": 6,
+  "uid": "uFoisl0Vjk",
+  "version": 11,
   "weekStart": ""
 }
