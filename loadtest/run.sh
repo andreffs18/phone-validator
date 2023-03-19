@@ -7,7 +7,8 @@
 
 DATE=$(date '+%Y-%m-%d')
 
-for MODE in "in_memory" "trie" "mongo" "postgres" "redis"
+# for MODE in "in_memory" "trie" "mongo" "postgres" "redis"
+for MODE in "postgres" "postgres_async" "postgres_async_singleton"
 do
     mkdir -p loadtest/$DATE/$MODE;
     echo "👀 Starting \"$MODE\" load test..."
@@ -22,7 +23,7 @@ do
         for clients in 1 2 4 8
         do
             echo "Running for 60seconds '-c $clients' for '$number' ..."
-            hey -z 60s -c $clients -m POST -H "Content-Type: application/json" -d  "[\"$number\"]" http://localhost:8080/aggregate > loadtest/$DATE/$MODE/output-c$clients-$number.txt
+            hey -z 60s -c $clients -t 0 -m POST -H "Content-Type: application/json" -d  "[\"$number\"]" http://localhost:8080/aggregate > loadtest/$DATE/$MODE/output-c$clients-$number.txt
             echo "Sleeping for 60"
             sleep 60
         done
