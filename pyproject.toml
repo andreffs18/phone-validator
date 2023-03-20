@@ -10,7 +10,7 @@ readme = "README.md"
 python = "^3.8"
 uvicorn = "^0.20.0"
 pydantic = "^1.10.4"
-starlette = "^0.24.0"
+starlette = ">0.24.0"
 starlette-prometheus = "^0.9.0"
 redis = "^4.5.1"
 psycopg = {extras = ["pool"], version = "^3.1.8"}
