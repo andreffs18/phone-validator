@@ -15,7 +15,7 @@ async def get_postgres_client() -> psycopg.AsyncConnection:
     global _postgres_client
     if not _postgres_client:
         _postgres_client = await psycopg.AsyncConnection.connect(
-            "postgresql://postgres:postgres@postgres:5432/postgres"
+            "postgresql://postgres:postgres@postgres:5432/postgres", autocommit=True
         )
     return _postgres_client
 

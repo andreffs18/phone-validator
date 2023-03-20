@@ -8,7 +8,7 @@
 DATE=$(date '+%Y-%m-%d')
 
 # for MODE in "in_memory" "trie" "mongo" "postgres" "redis"
-for MODE in "postgres" "postgres_async" "postgres_async_singleton"
+for MODE in "postgres" "postgres_async" "postgres_async_singleton" "postgres_async_pool"
 do
     mkdir -p loadtest/$DATE/$MODE;
     echo "👀 Starting \"$MODE\" load test..."

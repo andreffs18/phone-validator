@@ -2,7 +2,6 @@ import importlib
 import logging
 import os
 import time
-from enum import Enum
 
 import uvicorn
 from starlette.applications import Starlette
@@ -15,16 +14,8 @@ from routes import aggregate, health
 logger = logging.getLogger("uvicorn")
 logger.setLevel(logging.DEBUG)
 
-
-class Backend(str, Enum):
-    IN_MEMORY = "backend.in_memory"
-    TRIE = "backend.trie"
-    MONGO = "backend.mongo"
-    REDIS = "backend.redis"
-    POSTGRES = "backend.postgres"
-
-
-BACKEND = importlib.import_module(os.environ.get("BACKEND", Backend.TRIE))
+# You can override with a .env for any one of them under the "backends/" folder
+BACKEND = importlib.import_module(os.environ.get("BACKEND", "backend.trie"))
 
 
 async def startup():
