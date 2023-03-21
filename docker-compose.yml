@@ -76,6 +76,8 @@ services:
     image: stoplight/prism
     ports:
       - 4010:4010
+    environment:
+      - NODE_ENV=production
     volumes:
       - ./sector_service.yml:/usr/src/prism/packages/cli/sector_service.yml
-    command: mock sector_service.yml --dynamic --host 0.0.0.0
+    command: mock sector_service.yml --dynamic --host 0.0.0.0 -m

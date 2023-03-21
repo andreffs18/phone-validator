@@ -2,13 +2,11 @@
 
 This exercise is part of my blog post ["Tools vs Data-Structures"](https://www.andreffs.com/blog/tools-vs-data-structures/). You can read all about the rational for this there.
 
-
 ## Install
 
 To run this locally you just need docker.
 
 You should be able to just run ```make``` to build the project and run it.
-
 
 ## Usage
 
@@ -20,7 +18,6 @@ List of available commands:
 * `make test`: runs pytest
 * `make load`: runs loadtest
 
-
 There are 2 main modes of running this project:
 * In memory
   * Simple for loop
@@ -29,8 +26,6 @@ There are 2 main modes of running this project:
   * Postgres
   * Mongo
   * Redis
-
-
 
 ```mermaid
 ---
@@ -56,7 +51,6 @@ graph LR
     end
     API ---> | Get sector | ExternalService
 ```
-
 
 To choose which backend to use, you need to define the .env "BACKEND" to one of the following options:
 
