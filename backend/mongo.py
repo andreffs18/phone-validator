@@ -22,7 +22,7 @@ async def get_prefix(request, phone_number: str) -> Union[str, bool]:
 async def startup_backend(app: Starlette, logger: Logger) -> None:
     mongo_client = motor.motor_asyncio.AsyncIOMotorClient("mongo", 27017)
     # create index on prefix column with ascending sort order
-    await mongo_client.test.test_value.create_index([("prefix", "1")], background=False)
+    await mongo_client.test.test_value.create_index("prefix", background=False)
 
     prefixes = read_prefix_file()
     # one object per key, with the actual line being the value of the "key" field
