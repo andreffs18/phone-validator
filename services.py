@@ -2,11 +2,13 @@ import logging
 import os
 from typing import List, Union
 
-import requests
+import httpx
 from pydantic import BaseModel
 
 logger = logging.getLogger("uvicorn")
 logger.setLevel(logging.DEBUG)
+
+http_client = httpx.AsyncClient()
 
 
 class Response(BaseModel):
@@ -20,7 +22,7 @@ class Response(BaseModel):
 
 
 async def get_sector(phone_number: str) -> str:
-    response = requests.get(f"http://mock:4010/sector/{phone_number}")
+    response = await http_client.get(f"http://mock:4010/sector/{phone_number}")
     response = Response(**response.json())
     return response.sector
 

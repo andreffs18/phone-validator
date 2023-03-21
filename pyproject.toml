@@ -12,11 +12,13 @@ uvicorn = "^0.20.0"
 pydantic = "^1.10.4"
 starlette = ">0.24.0"
 starlette-prometheus = "^0.9.0"
+httpx = "^0.23.3"
 redis = "^4.5.1"
 psycopg = {extras = ["pool"], version = "^3.1.8"}
 psycopg2 = "^2.9.5"
 motor = "^3.1.1"
 pytrie = "^0.4.0"
+databases = {extras = ["asyncpg"], version = "^0.7.0"}
 
 
 [tool.poetry.group.dev.dependencies]
