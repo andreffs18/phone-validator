@@ -16,7 +16,7 @@ def get_postgres_client() -> psycopg.AsyncConnection:
     global _postgres_client
     if not _postgres_client:
         _postgres_client = psycopg_pool.AsyncConnectionPool(
-            "postgresql://postgres:postgres@postgres:5432/postgres", open=True
+            "postgresql://postgres:postgres@postgres:5432/postgres", timeout=60.0, open=True
         )
     return _postgres_client
 

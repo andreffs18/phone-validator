@@ -9,7 +9,7 @@ from services import read_prefix_file
 
 async def get_prefix(request, phone_number: str) -> Union[str, bool]:
     postgres_client = psycopg2.connect(
-        database="postgres", user="postgres", password="postgres", host="postgres", port="5432"
+        database="postgres", user="postgres", password="postgres", host="postgres", port="5432", connect_timeout=60
     )
     cur = postgres_client.cursor()
     cur.execute(f"SELECT * FROM prefix WHERE '{phone_number}' LIKE '%' || prefix || '%' ORDER BY prefix DESC LIMIT 1")
@@ -22,7 +22,7 @@ async def get_prefix(request, phone_number: str) -> Union[str, bool]:
 
 async def startup_backend(app: Starlette, logger: Logger) -> None:
     postgres_client = psycopg2.connect(
-        database="postgres", user="postgres", password="postgres", host="postgres", port="5432"
+        database="postgres", user="postgres", password="postgres", host="postgres", port="5432", connect_timeout=60
     )
     cur = postgres_client.cursor()
     cur.execute("CREATE TABLE IF NOT EXISTS prefix (prefix INT PRIMARY KEY NOT NULL);")
@@ -41,7 +41,7 @@ async def startup_backend(app: Starlette, logger: Logger) -> None:
 
 async def shutdown_backend(app: Starlette, logger: Logger) -> None:
     postgres_client = psycopg2.connect(
-        database="postgres", user="postgres", password="postgres", host="postgres", port="5432"
+        database="postgres", user="postgres", password="postgres", host="postgres", port="5432", connect_timeout=60
     )
     cur = postgres_client.cursor()
     cur.execute("DROP TABLE prefix;")
