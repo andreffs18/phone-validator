@@ -2,10 +2,110 @@
   "annotations": {
     "list": [
       {
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "iconColor": "#636efb",
+        "name": "backend.in_memory",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [
+            "backend.in_memory"
+          ],
+          "type": "tags"
+        }
+      },
+      {
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "iconColor": "#e9563f",
+        "name": "backend.trie",
+        "target": {
+          "limit": 100,
+          "refId": "Anno",
+          "tags": [
+            "backend.trie"
+          ],
+          "type": "tags"
+        }
+      },
+      {
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "iconColor": "#00cc96",
+        "name": "backend.mongo",
+        "target": {
+          "limit": 100,
+          "refId": "Anno",
+          "tags": [
+            "backend.mongo"
+          ],
+          "type": "tags"
+        }
+      },
+      {
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "iconColor": "#ab63fa",
+        "name": "backend.redis",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [
+            "backend.redis"
+          ],
+          "type": "tags"
+        }
+      },
+      {
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "iconColor": "#ffa15a",
+        "name": "backend.postgres",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [
+            "backend.postgres"
+          ],
+          "type": "tags"
+        }
+      },
+      {
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "iconColor": "yellow",
+        "name": "backend.*",
+        "target": {
+          "limit": 100,
+          "matchAny": true,
+          "refId": "Anno",
+          "type": "dashboard"
+        }
+      },
+      {
         "builtIn": 1,
         "datasource": {
           "type": "prometheus",
-          "uid": "pkNRHeaVz"
+          "uid": "qEiGqzf4k"
         },
         "enable": true,
         "hide": true,
@@ -24,14 +124,14 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 2,
+  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "pkNRHeaVz"
+        "uid": "qEiGqzf4k"
       },
       "fieldConfig": {
         "defaults": {
@@ -109,7 +209,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "pkNRHeaVz"
+            "uid": "qEiGqzf4k"
           },
           "editorMode": "builder",
           "exemplar": false,
@@ -127,7 +227,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "pkNRHeaVz"
+        "uid": "qEiGqzf4k"
       },
       "fieldConfig": {
         "defaults": {
@@ -206,7 +306,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "pkNRHeaVz"
+            "uid": "qEiGqzf4k"
           },
           "editorMode": "builder",
           "expr": "histogram_quantile(0.99, sum by(le, path_template) (rate(starlette_requests_processing_time_seconds_bucket[$__rate_interval])))",
@@ -217,7 +317,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "pkNRHeaVz"
+            "uid": "qEiGqzf4k"
           },
           "editorMode": "builder",
           "expr": "histogram_quantile(0.95, sum by(le, path_template) (rate(starlette_requests_processing_time_seconds_bucket[$__rate_interval])))",
@@ -229,7 +329,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "pkNRHeaVz"
+            "uid": "qEiGqzf4k"
           },
           "editorMode": "builder",
           "expr": "histogram_quantile(0.9, sum by(le, path_template) (rate(starlette_requests_processing_time_seconds_bucket[$__rate_interval])))",
@@ -245,7 +345,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "pkNRHeaVz"
+        "uid": "qEiGqzf4k"
       },
       "fieldConfig": {
         "defaults": {
@@ -349,7 +449,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "pkNRHeaVz"
+            "uid": "qEiGqzf4k"
           },
           "editorMode": "builder",
           "expr": "rate(process_cpu_seconds_total[$__rate_interval])",
@@ -364,7 +464,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "pkNRHeaVz"
+        "uid": "qEiGqzf4k"
       },
       "fieldConfig": {
         "defaults": {
@@ -468,7 +568,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "pkNRHeaVz"
+            "uid": "qEiGqzf4k"
           },
           "editorMode": "builder",
           "expr": "process_virtual_memory_bytes",
@@ -479,7 +579,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "pkNRHeaVz"
+            "uid": "qEiGqzf4k"
           },
           "editorMode": "builder",
           "expr": "process_resident_memory_bytes",
@@ -493,7 +593,7 @@
       "type": "timeseries"
     }
   ],
-  "refresh": "5s",
+  "refresh": false,
   "schemaVersion": 37,
   "style": "dark",
   "tags": [],
@@ -501,13 +601,13 @@
     "list": []
   },
   "time": {
-    "from": "now-5m",
-    "to": "now"
+    "from": "2023-03-20T20:51:34.000Z",
+    "to": "2023-03-20T21:06:27.000Z"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Starlette Dashboard",
   "uid": "uFoisl0Vjk",
-  "version": 11,
+  "version": 7,
   "weekStart": ""
 }

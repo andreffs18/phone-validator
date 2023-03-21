@@ -18,3 +18,6 @@ test:
 
 load:
 	./loadtest/run.sh
+
+results:
+	./loadtest/results.sh
